@@ -15,37 +15,36 @@
 <!-- Hidden container with dynamic content -->
 <div id="dynamic-content">
 <?php foreach ($category as $cat) { ?>
-    <a class="fancybox" data-fancybox="gallery" href="{{ asset('/Category/'.$cat->image) }}">
+    <a class="fancybox" data-fancybox="gallery" href="">
         <img src="{{ asset('/Category/'.$cat->image) }}" width="150px" height="150px" alt="Category Image">
     </a>
 <?php } ?>
 </div>
 
-
 <script>
     $(document).ready(function() {
+        
+         $(".fancybox").each(function() {
+            var img_src = $(this).find("img").attr("src");
+            $(this).attr("href", img_src);
+        });
+
         // Initialize FancyBox
         $("[data-fancybox]").fancybox({
             // Animation effect
             animationEffect: "fade", // You can change to "zoom", "fade", or other effects
-
             // Transition duration
             transitionDuration: 500, // In milliseconds
-
             // Enable or disable infinite gallery navigation
             loop: true,
-
             // Enable keyboard navigation
             keyboard: true,
-
             // Enable or disable zooming
             zoom: true,
             infobar: true,
             buttons: ["slideShow", "fullScreen", "thumbs", "close"],
-
             // Set the idle time after which UI elements will be hidden
             idleTime: 3000, // In milliseconds
-
             // Callback functions
             afterLoad: function(instance, current) {
                 console.log("FancyBox opened!");
@@ -57,7 +56,5 @@
         });
     });
 </script>
-
-
 </body>
 </html>
