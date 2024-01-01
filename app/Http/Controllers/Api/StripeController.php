@@ -15,14 +15,53 @@ class StripeController extends Controller
 
     use StripeUser;
 
-    public function createAccount(Request $request)
+    public function createUpdateCustomer(Request $request)
     {
         $data = $request->only('email');
-        $user_id = auth()->user()->id;
+        $user = auth()->user();
+        $user_id = $user->id;
+        $error = false;
 
-        $account = $this->creteAccount($data);
-        return $account;
-        var_dump($data,$user_id);
+            
+        try {
+            $customer = $this->stripeCustomer($user);
+            
+            return $customer;
+                
+        } catch (\Throwable $th) {
+            $error = $th->getMessage();
+        }
+
+        return [
+            'success' => !$error ? true : false,
+            'data' => !$error ? $stripe : null,
+            'error' => $error, 
+        ];
+    } 
+
+    public function createUpdateBank(Request $request)
+    {
+        $data = $request->only('account_holder_name','routing_number','account_number');
+        $user = auth()->user();
+        $user_id = $user->id;
+        $error = false;
+
+            
+        try {
+            $customer = $this->updateBank($user,$data);
+            
+            return $customer;
+                
+        } catch (\Throwable $th) {
+            $error = $th->getMessage();
+        }
+
+        return [
+            'success' => !$error ? true : false,
+            'data' => !$error ? $stripe : null,
+            'error' => $error, 
+        ];
     }
 
 }
+

@@ -34,13 +34,11 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/subscription/list', [SubscriptionController::class, 'getSubscriptionlist']);
     Route::post('/subscription/purchase', [SubscriptionController::class, 'subscriptionPurchase']);
     Route::get('/user/subscription/detail', [SubscriptionController::class, 'getUserSubscription']);
+    Route::post('/user/update/account', [StripeController::class, 'createUpdateCustomer']);
+    Route::post('/user/update/bank', [StripeController::class, 'createUpdateBank']);
 
-
-    Route::post('/user/add/account', [StripeController::class, 'createAccount']);
-    
 });
 
 
 Route::post('/calculation', [SubscriptionController::class, 'calculation']);
-    
 Route::get('/paypal', [PayPalController::class, 'createPlan']);

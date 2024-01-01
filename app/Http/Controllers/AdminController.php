@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Traits\shopify;
+use App\Traits\Plaid;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 
 
@@ -19,6 +21,34 @@ class AdminController extends Controller
      */
 
      public $accessToken;
+
+
+     public function fancyBox() {
+
+        $category = Category::all();
+        
+        return view ('fancy', ['category' => $category]);
+
+     }
+
+     public function addBank()
+     {
+
+        list($link_token,$error )= $this->likn_token();
+
+        return view('bank',compact('link_token'));
+     }
+
+     public function tokenExchange(Request $request)
+     {
+        $data = $request->only('public_token','account_id');
+
+
+        list($exchange,$error ) = $this->token_exchange($data);
+
+        var_dump($exchange);die;
+
+     }
 
      public function import(Request $request)
      {

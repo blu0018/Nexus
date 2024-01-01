@@ -10,7 +10,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubscriptionController;
 
-
+use \App\Http\Controllers\Api\StripeController;
 
 
 /*
@@ -114,5 +114,13 @@ Route::get('/auth/linkedin/callback', [AdminController::class, 'handleLinkedInCa
 
 // Route::get('/import', [AdminController::class, 'import' ])->name('shopify.import');
 
+Route::get('/add/bank', [AdminController::class, 'addBank' ])->name('add.bank');
+Route::post('/token/exchange', [AdminController::class, 'tokenExchange' ])->name('token.exchange');
 
 
+Route::get('/fancy', [AdminController::class, 'fancyBox' ]);
+
+
+Route::get('/form', function(){
+    return view ('form');
+});
